@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Please stand by!</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    background: linear-gradient(
+      to bottom,
+      #292d6a 0%,
+      #2e2f70 5%,
+      #2a2d72 10%,
+      #323578 15%,
+      #313678 20%,
+      #31397a 25%,
+      #383b80 30%,
+      #3d4085 35%,
+      #43468d 40%,
+      #45488d 45%,
+      #4b5094 50%,
+      #565599 55%,
+      #5e5ba0 60%,
+      #6c63a4 65%,
+      #7a6fa7 70%,
+      #8b7ca7 75%,
+      #a189a3 80%,
+      #b79397 85%,
+      #da9b7a 90%,
+      #ffab62 95%,
+      #feb041 100%
+    );
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .glass-text {
+    position: relative;
+    user-select: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .glass-text .base {
+    color: rgba(255, 255, 255, 0.32);
+    display: block;
+  }
+
+  h1 .base,
+  h1 .lens {
+    font-weight: 700;
+    font-size: clamp(2.5rem, 8vw, 7rem);
+    letter-spacing: -0.02em;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  a.email .base,
+  a.email .lens {
+    font-weight: 400;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  /* sharp, bright duplicate revealed only under the cursor: a glass lens */
+  .glass-text .lens {
+    position: absolute;
+    inset: 0;
+    color: #ffffff;
+    -webkit-mask-image: radial-gradient(circle 180px at var(--mx, -999px) var(--my, -999px), #000 0%, #000 35%, transparent 100%);
+    mask-image: radial-gradient(circle 180px at var(--mx, -999px) var(--my, -999px), #000 0%, #000 35%, transparent 100%);
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  .glass-text.idle .lens {
+    opacity: 0;
+  }
+
+  footer {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  a.email {
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+  <h1 class="glass-text">
+    <span class="base">Please stand by!</span>
+    <span class="lens" aria-hidden="true">Please stand by!</span>
+  </h1>
+  <footer>
+    <a class="email glass-text" href="mailto:contact@jzadl.xyz">
+      <span class="base">email</span>
+      <span class="lens" aria-hidden="true">email</span>
+    </a>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.glass-text').forEach(function (el) {
+      el.classList.add('idle');
+      el.addEventListener('mousemove', function (e) {
+        var rect = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+        el.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+        el.classList.remove('idle');
+      });
+      el.addEventListener('mouseleave', function () {
+        el.classList.add('idle');
+      });
+    });
+  </script>
+</body>
+</html>
